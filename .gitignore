@@ -19,7 +19,7 @@
 
 # production
 /build
-
+.next/cache/
 # misc
 .DS_Store
 *.pem
