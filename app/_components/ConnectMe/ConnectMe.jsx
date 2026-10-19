@@ -1,6 +1,7 @@
 'use client'
 import React, { useState } from "react";
 import TitleSection from "../TitleSection/TitleSection";
+import Reveal from "../Reveal/Reveal";
 
 
 export default function ContactForm() {
@@ -27,10 +28,10 @@ export default function ContactForm() {
         }
     };
     return (
-        <section id="ConectMe" className="px-4 md:px-6 py-6 dark:bg-black md:scroll-mt-0 scroll-mt-24">
-            <TitleSection title="Conect Me" />
-            <div className="grid md:grid-cols-2 items-start gap-16 mx-auto max-w-5xl">
-                <div>
+        <section id="ConectMe" className="px-4 py-6 md:px-6 dark:bg-black">
+            <TitleSection title="Connect Me" />
+            <div className="mx-auto grid max-w-5xl items-start gap-16 md:grid-cols-2">
+                <Reveal direction="left">
                     <div className="mb-12">
                         <h2 className="text-3xl font-bold text-slate-900 mb-6 md:text-4xl dark:text-slate-50">
                             Let's Talk
@@ -165,25 +166,34 @@ export default function ContactForm() {
 
                         </ul>
                     </div>
-                </div>
+                </Reveal>
 
-                <form onSubmit={handleSend} className="space-y-4">
+                <Reveal as="form" direction="right" delay={120} onSubmit={handleSend} className="space-y-4">
+                    {/* Honeypot: مخفي عن المستخدم، لو اتملى يبقى بوت => نرفض الإرسال */}
+                    <input
+                        type="text"
+                        name="company"
+                        tabIndex={-1}
+                        autoComplete="off"
+                        aria-hidden="true"
+                        className="absolute left-[-9999px] h-0 w-0 opacity-0"
+                    />
                     <div>
                         <label htmlFor="name"
                             className="mb-2 text-slate-900 dark:text-slate-50 font-medium text-sm inline-block">Name</label>
-                        <input type="text" id="name" name="name" placeholder="Momen" required
+                        <input type="text" id="name" name="name" placeholder="Momen" required autoComplete="name"
                             className="px-3 py-2.5 text-sm text-slate-900 w-full rounded-md bg-white outline-1 -outline-offset-1 outline-slate-300 focus:outline-2 focus:-outline-offset-2 focus:outline-teal-600 dark:text-slate-50 dark:bg-neutral-800 dark:outline-neutral-700" />
                     </div>
                     <div>
                         <label htmlFor="email"
                             className="mb-2 text-slate-900 dark:text-slate-50 font-medium text-sm inline-block">Email</label>
-                        <input type="email" id="email" name="email" placeholder="momen@gmail.com" required
+                        <input type="email" id="email" name="email" placeholder="momen@gmail.com" required autoComplete="email"
                             className="px-3 py-2.5 text-sm text-slate-900 w-full rounded-md bg-white outline-1 -outline-offset-1 outline-slate-300 focus:outline-2 focus:-outline-offset-2 focus:outline-teal-600 dark:text-slate-50 dark:bg-neutral-800 dark:outline-neutral-700" />
                     </div>
                     <div>
                         <label htmlFor="phone" className="mb-2 text-slate-900 dark:text-slate-50 font-medium text-sm inline-block">Phone
                             number</label>
-                        <input type="tel" id="phone" name="phone" placeholder="+201234567890" 
+                        <input type="tel" id="phone" name="phone" placeholder="+201234567890" autoComplete="tel"
                             className="px-3 py-2.5 text-sm text-slate-900 w-full rounded-md bg-white outline-1 -outline-offset-1 outline-slate-300 focus:outline-2 focus:-outline-offset-2 focus:outline-teal-600 dark:text-slate-50 dark:bg-neutral-800 dark:outline-neutral-700" />
                     </div>
                     <div>
@@ -194,10 +204,12 @@ export default function ContactForm() {
                     </div>
 
                     <button type="submit" disabled={status === "sending"}
-                        className="py-2.5 px-4 text-sm rounded-md font-semibold cursor-pointer text-white border border-teal-600 bg-teal-600 hover:bg-teal-700 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-500">{status === "sending" ? "Sending..." : "Send message"}</button>
-                    {status === "sent" && <p className="text-sm text-teal-600">Message sent. Thank you!</p>}
-                    {status === "error" && <p className="text-sm text-red-500">Something went wrong. Try again.</p>}
-                </form>
+                        className="py-2.5 px-4 text-sm rounded-md font-semibold cursor-pointer text-white border border-teal-600 bg-teal-600 hover:bg-teal-700 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-500 disabled:cursor-not-allowed disabled:opacity-70">{status === "sending" ? "Sending..." : "Send message"}</button>
+                    <p aria-live="polite" role="status" className="min-h-5 text-sm">
+                        {status === "sent" && <span className="text-teal-600">Message sent. Thank you!</span>}
+                        {status === "error" && <span className="text-red-500">Something went wrong. Try again.</span>}
+                    </p>
+                </Reveal>
             </div>
         </section>
     );

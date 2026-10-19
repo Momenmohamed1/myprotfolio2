@@ -1,10 +1,11 @@
-import Link from "next/link";
+import Reveal from "../Reveal/Reveal";
 
 const navLinks = [
-  { label: "Home", href: "/" },
-  { label: "About", href: "/about" },
-  { label: "Contact", href: "/contact" },
-  { label: "Products", href: "/products" },
+  { label: "Home", href: "/#Home" },
+  { label: "About", href: "/#AboutMe" },
+  { label: "Skills", href: "/#Skills" },
+  { label: "Projects", href: "/#Project" },
+  { label: "Contact", href: "/#ConectMe" },
 ];
 
 const socials = [
@@ -40,8 +41,11 @@ const socials = [
 
 export default function Footer() {
   return (
-    <footer className="px-4 pb-6 pt-16 dark:bg-black">
-      <div className="mx-auto max-w-6xl rounded-3xl border border-gray-200 bg-white/80 p-8 shadow-[0_0_40px_-10px_rgba(0,212,200,0.35)] backdrop-blur dark:border-white/10 dark:bg-gray-900/80">
+    <footer className="px-4 pt-16 pb-6 dark:bg-black">
+      <Reveal
+        direction="up"
+        className="mx-auto max-w-6xl rounded-3xl border border-gray-200 bg-white/80 p-8 shadow-[0_0_40px_-10px_rgba(0,212,200,0.35)] backdrop-blur dark:border-white/10 dark:bg-gray-900/80"
+      >
         <div className="grid gap-8 md:grid-cols-3">
           <div>
             <h3 className="bg-linear-to-r from-indigo-500 via-blue-500 to-teal-400 bg-clip-text text-2xl font-bold text-transparent">
@@ -55,11 +59,14 @@ export default function Footer() {
           <div>
             <h4 className="mb-3 text-sm font-semibold text-gray-900 dark:text-white">Quick links</h4>
             <ul className="space-y-2 text-sm">
-              {navLinks.map((l) => (
-                <li key={l.href}>
-                  <Link href={l.href} className="text-gray-600 transition hover:text-blue-500 dark:text-gray-400 dark:hover:text-teal-400">
-                    {l.label}
-                  </Link>
+              {navLinks.map((link) => (
+                <li key={link.href}>
+                  <a
+                    href={link.href}
+                    className="text-gray-600 transition hover:text-blue-500 dark:text-gray-400 dark:hover:text-teal-400"
+                  >
+                    {link.label}
+                  </a>
                 </li>
               ))}
             </ul>
@@ -68,16 +75,16 @@ export default function Footer() {
           <div>
             <h4 className="mb-3 text-sm font-semibold text-gray-900 dark:text-white">Let's connect</h4>
             <div className="flex gap-3">
-              {socials.map((s) => (
+              {socials.map((social) => (
                 <a
-                  key={s.label}
-                  href={s.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={s.label}
+                  key={social.label}
+                  href={social.href}
+                  target={social.href.startsWith("http") ? "_blank" : undefined}
+                  rel={social.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                  aria-label={social.label}
                   className="flex h-10 w-10 items-center justify-center rounded-full border border-gray-200 text-gray-700 transition hover:-translate-y-0.5 hover:border-transparent hover:bg-gradient-to-r hover:from-blue-500 hover:to-teal-400 hover:text-white dark:border-white/10 dark:text-gray-300"
                 >
-                  {s.icon}
+                  {social.icon}
                 </a>
               ))}
             </div>
@@ -89,7 +96,7 @@ export default function Footer() {
         <p className="mt-6 text-center text-sm text-gray-500 dark:text-gray-400">
           &copy; {new Date().getFullYear()} Momen Mohamed. Built with Next.js and Tailwind CSS.
         </p>
-      </div>
+      </Reveal>
     </footer>
   );
 }
