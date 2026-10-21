@@ -18,7 +18,17 @@ import Reveal from "../Reveal/Reveal";
  * بمجرد ما تضيف عناصر هنا الكروت هتظهر تلقائياً،
  * ولو لسه فاضية هيظهر مكان "coming soon".
  */
-const projects = [];
+const projects = [
+  {
+    title: "E-Commerce Store",
+    date: "2026-10-21",
+    description:
+      "Full-stack store with Next.js 16 and Clerk authentication, backed by a Strapi 5 headless CMS. Includes product browsing, cart, and user profile.",
+    tags: ["next", "react", "js"],
+    live: "https://ecomerce-blush-eight.vercel.app",
+    image: "/projects/ecommerce.png",
+  },
+];
 
 const Prtojects = () => {
   return (

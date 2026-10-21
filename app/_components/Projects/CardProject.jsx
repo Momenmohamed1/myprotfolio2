@@ -16,10 +16,26 @@ const formatDate = (value) => {
 };
 
 const CardProject = ({ project = {} }) => {
-  const { title = "Project title", date, description, tags = [], live, github } = project;
+  const { title = "Project title", date, description, tags = [], live, github, image } = project;
 
   return (
     <article className="flex h-full flex-col rounded-[10px] border-2 border-gray-200 bg-white px-4 pt-6 pb-4 text-black transition-all duration-300 hover:-translate-y-1 hover:border-teal-500 hover:shadow-lg hover:shadow-teal-300/40 dark:border-[#0B4078] dark:bg-[#071321] dark:text-white dark:hover:shadow-[#0B4078]/40">
+      {image && (
+        <a
+          href={live ?? image}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mb-4 block overflow-hidden rounded-lg border border-gray-200 dark:border-[#0B4078]"
+        >
+          <img
+            src={image}
+            alt={title}
+            loading="lazy"
+            className="h-40 w-full object-cover object-top transition duration-300 hover:scale-105"
+          />
+        </a>
+      )}
+
       {formatDate(date) && (
         <time className="block text-xs text-gray-500">{formatDate(date)}</time>
       )}
