@@ -2,6 +2,20 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+/* منع أي عنصر زخرفي من توسيع الصفحة أفقيًا (بيكسر الهيدر الثابت على الموبايل) */
+html,
+body {
+  overflow-x: clip;
+  max-width: 100%;
+}
+
+@supports not (overflow: clip) {
+  html,
+  body {
+    overflow-x: hidden;
+  }
+}
+
 :root {
   --background: #ffffff;
   --foreground: #171717;

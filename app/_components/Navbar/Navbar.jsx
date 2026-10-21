@@ -63,7 +63,7 @@ const Navbar = () => {
   return (
     <header className="fixed inset-x-0 top-4 z-50 flex justify-center px-3">
       <nav
-        className={`w-full max-w-150 rounded-3xl border bg-white/70 p-3 backdrop-blur-md transition-all duration-500 dark:bg-[#071321]/70 ${
+        className={`w-full max-w-150 rounded-3xl border bg-white/70 p-3 backdrop-blur-md transition-[background-color,border-color,box-shadow] duration-500 dark:bg-[#071321]/70 ${
           scrolled
             ? "border-teal-500/40 shadow-xl shadow-teal-500/20 dark:border-[#0B4078] dark:shadow-[#0B4078]/30"
             : "border-white/20 shadow-lg shadow-teal-200/50 dark:shadow-none"
