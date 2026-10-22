@@ -26,7 +26,7 @@ export default function SkillsMarquee() {
         {[0, 1].map((item) => (
           <div
             key={item}
-            className="flex shrink-0 animate-marquee items-center gap-8 pr-8 motion-reduce:animate-none group-hover:[animation-play-state:paused]"
+            className="flex shrink-0 animate-marquee items-center gap-8 pe-8 motion-reduce:animate-none group-hover:[animation-play-state:paused]"
             aria-hidden={item === 1}
           >
             {skills.map((skill) => (

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useI18n } from "../../_i18n/LanguageProvider";
 
 /**
  * زر تبديل الثيم (فاتح/غامق) مع حفظ الاختيار في localStorage.
@@ -30,6 +31,7 @@ const MoonIcon = () => (
 );
 
 export default function ThemeToggle({ className = "" }) {
+  const { t } = useI18n();
   const [theme, setTheme] = useState("light");
   const [mounted, setMounted] = useState(false);
 
@@ -55,8 +57,8 @@ export default function ThemeToggle({ className = "" }) {
     <button
       type="button"
       onClick={toggleTheme}
-      aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
-      title={isDark ? "Light mode" : "Dark mode"}
+      aria-label={isDark ? t.theme.toLight : t.theme.toDark}
+      title={isDark ? t.theme.toLight : t.theme.toDark}
       className={`relative flex h-10 w-10 cursor-pointer items-center justify-center rounded-full text-gray-800 transition-colors duration-300 hover:bg-teal-500/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-500 dark:text-yellow-400 ${className}`}
     >
       <span

@@ -1,5 +1,8 @@
+"use client";
+
 import React from "react";
 import { JavaScriptIcon, NextjsIcon, ReactIcon } from "../Icons/Icons";
+import { useI18n } from "../../_i18n/LanguageProvider";
 
 // كل تاج معاه الأيقونة والاسم اللي هيظهروا في الكارت
 const TAG_META = {
@@ -8,15 +11,29 @@ const TAG_META = {
   js: { label: "JavaScript", icon: <JavaScriptIcon width={20} height={20} /> },
 };
 
-const formatDate = (value) => {
+const formatDate = (value, lang) => {
   if (!value) return null;
   const parsed = new Date(value);
   if (Number.isNaN(parsed.getTime())) return value;
-  return parsed.toLocaleDateString("en-US", { day: "numeric", month: "short", year: "numeric" });
+  return parsed.toLocaleDateString(lang === "ar" ? "ar-EG" : "en-US", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+  });
+};
+
+// بيختار النص حسب اللغة، ولو النص مش مترجم بيرجع زي ما هو
+const pick = (value, lang, fallback) => {
+  if (!value) return fallback;
+  if (typeof value === "string") return value;
+  return value[lang] ?? value.en ?? fallback;
 };
 
 const CardProject = ({ project = {} }) => {
-  const { title = "Project title", date, description, tags = [], live, github, image } = project;
+  const { lang, t } = useI18n();
+  const { date, tags = [], live, github, image } = project;
+  const title = pick(project.title, lang, "Project title");
+  const description = pick(project.description, lang, "");
 
   return (
     <article className="flex h-full flex-col rounded-[10px] border-2 border-gray-200 bg-white px-4 pt-6 pb-4 text-black transition-all duration-300 hover:-translate-y-1 hover:border-teal-500 hover:shadow-lg hover:shadow-teal-300/40 dark:border-[#0B4078] dark:bg-[#071321] dark:text-white dark:hover:shadow-[#0B4078]/40">
@@ -36,8 +53,8 @@ const CardProject = ({ project = {} }) => {
         </a>
       )}
 
-      {formatDate(date) && (
-        <time className="block text-xs text-gray-500">{formatDate(date)}</time>
+      {formatDate(date, lang) && (
+        <time className="block text-xs text-gray-500">{formatDate(date, lang)}</time>
       )}
 
       <h3 className="mt-0.5 text-lg font-medium">
@@ -79,7 +96,7 @@ const CardProject = ({ project = {} }) => {
             rel="noopener noreferrer"
             className="rounded-2xl border border-teal-400 bg-teal-600 p-2 text-white transition duration-300 hover:bg-teal-700 active:bg-teal-800"
           >
-            Live Demo
+            {t.projects.liveDemo}
           </a>
         )}
         {github && (

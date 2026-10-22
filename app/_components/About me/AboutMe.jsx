@@ -1,49 +1,37 @@
+"use client";
+
 import Image from "next/image";
 import React from "react";
 
 import AboutSide from "./AboutSide";
 import TitleSection from "../TitleSection/TitleSection";
 import Reveal from "../Reveal/Reveal";
+import RichText from "../RichText/RichText";
+import { useI18n } from "../../_i18n/LanguageProvider";
 
 const AboutMe = () => {
+  const { t } = useI18n();
+  const about = t.about;
+
   return (
     <section id="AboutMe" className="min-h-screen dark:bg-black dark:text-white">
-      <TitleSection title="About Me" />
+      <TitleSection title={about.title} />
       <div className="justify-around lg:flex">
-        <Reveal direction="left" className="flex items-center">
-          <Image src="/3.png" width={1000} height={1000} alt="About Momen Mohamed" />
+        <Reveal direction="left" className="flex items-center lg:w-80 lg:shrink-0">
+          <Image src="/3.png" width={1000} height={1000} alt={about.imageAlt} />
         </Reveal>
 
-        <Reveal direction="up" delay={120} className="p-3 text-[15px]/7 font-semibold text-gray-500">
-          <p>
-            Hi, I'm <span className="text-teal-600">Momen</span>
-            <br />
-            I'm a passionate web developer and a <span className="text-teal-600">Mechatronics</span>{" "}
-            student at{" "}
-            <span className="bg-linear-to-r/srgb from-indigo-500 to-teal-400 bg-clip-text text-transparent">
-              New Cairo Technological University.
-            </span>
-            My passion for programming motivates me to continuously learn, explore new technologies,
-            and build modern web applications.
-            <br />
-            I've learned{" "}
-            <span className="bg-linear-to-r/srgb from-indigo-500 to-teal-400 bg-clip-text text-transparent">
-              Frontend Development
-            </span>{" "}
-            and worked with technologies like HTML, CSS, JavaScript, React.js, Next.js, and Tailwind
-            CSS. Currently, I'm learning <span className="text-teal-600">Backend Development</span>{" "}
-            to expand my skills and work toward becoming a{" "}
-            <span className="text-teal-600">Full-Stack Developer.</span>
-            <br />
-            I enjoy turning ideas into interactive web experiences, solving problems, and improving
-            my skills through hands-on projects.
-            <br />
-            My goal is to become a skilled{" "}
-            <span className="text-teal-600">Full-Stack Developer</span> and build useful,
-            high-quality web applications.
-          </p>
-          <div className="mt-3 flex items-center">
-            <button className="mr-5 flex cursor-pointer gap-2 rounded-xl bg-linear-to-r from-blue-500 to-teal-400 px-4 py-3 font-semibold text-white shadow-lg transition-all duration-300 hover:shadow-xl hover:opacity-95">
+        <Reveal direction="up" delay={120} className="p-3 text-[15px]/7 font-semibold text-gray-500 lg:min-w-0 lg:max-w-2xl lg:flex-1">
+          <div className="space-y-4">
+            {about.paragraphs.map((paragraph) => (
+              <p key={paragraph}>
+                <RichText text={paragraph} />
+              </p>
+            ))}
+          </div>
+
+          <div className="mt-3 flex flex-wrap items-center gap-3">
+            <button className="flex cursor-pointer gap-2 rounded-xl bg-linear-to-r from-blue-500 to-teal-400 px-4 py-3 font-semibold text-white shadow-lg transition-all duration-300 hover:shadow-xl hover:opacity-95">
               <span>
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                   <path
@@ -56,14 +44,14 @@ const AboutMe = () => {
                   />
                 </svg>
               </span>
-              Download CV
+              {about.downloadCv}
             </button>
             <div className="flex cursor-pointer items-center gap-2 text-teal-600">
               <a href="/#ConectMe" className="cursor-pointer underline">
-                Let's Connect
+                {about.letsConnect}
               </a>
               <span>
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true" className="rtl:rotate-180">
                   <path
                     fillRule="evenodd"
                     clipRule="evenodd"
@@ -79,7 +67,7 @@ const AboutMe = () => {
         <Reveal
           direction="right"
           delay={200}
-          className="m-2 min-w-90 rounded-2xl border-2 border-teal-500 dark:border-[#123B60] dark:bg-[#071321]"
+          className="m-2 min-w-90 shrink-0 rounded-2xl border-2 border-teal-500 dark:border-[#123B60] dark:bg-[#071321]"
         >
           <AboutSide />
         </Reveal>

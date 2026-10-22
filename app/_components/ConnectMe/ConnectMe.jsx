@@ -2,11 +2,13 @@
 import React, { useState } from "react";
 import TitleSection from "../TitleSection/TitleSection";
 import Reveal from "../Reveal/Reveal";
+import { useI18n } from "../../_i18n/LanguageProvider";
 
 
 export default function ContactForm() {
 
-
+    const { t } = useI18n();
+    const f = t.contact.form;
     const [status, setStatus] = useState("idle");
 
     const handleSend = async (e) => {
@@ -29,21 +31,20 @@ export default function ContactForm() {
     };
     return (
         <section id="ConectMe" className="px-4 py-6 md:px-6 dark:bg-black">
-            <TitleSection title="Connect Me" />
+            <TitleSection title={t.contact.title} />
             <div className="mx-auto grid max-w-5xl items-start gap-16 md:grid-cols-2">
                 <Reveal direction="left">
                     <div className="mb-12">
                         <h2 className="text-3xl font-bold text-slate-900 mb-6 md:text-4xl dark:text-slate-50">
-                            Let's Talk
+                            {t.contact.heading}
                         </h2>
                         <p className="text-base leading-relaxed text-slate-600 dark:text-slate-400">
-                            Have some big idea or brand to develop and need help? Then reach out we'd love to hear about your
-                            project and provide help.
+                            {t.contact.intro}
                         </p>
                     </div>
 
                     <div className="mt-12">
-                        <h3 className="text-slate-900 text-base font-semibold dark:text-slate-50">Email</h3>
+                        <h3 className="text-slate-900 text-base font-semibold dark:text-slate-50">{t.contact.emailTitle}</h3>
                         <ul className="mt-4">
                             <li className="flex items-center">
                                 <div className="flex items-center bg-slate-200 dark:bg-neutral-800 w-8 h-8 p-2 rounded-full">
@@ -64,8 +65,8 @@ export default function ContactForm() {
                                         </g>
                                     </svg>
                                 </div>
-                                <a href="mailto:momenalberann6@gmail.com" className="text-sm ml-4">
-                                    <small className="block text-slate-900 dark:text-slate-50">Mail</small>
+                                <a href="mailto:momenalberann6@gmail.com" className="text-sm ms-4">
+                                    <small className="block text-slate-900 dark:text-slate-50">{t.contact.mailLabel}</small>
                                     <span className="font-semibold text-teal-600 dark:text-slate-400">momenalberann6@gmail.com</span>
                                 </a>
                             </li>
@@ -73,7 +74,7 @@ export default function ContactForm() {
                     </div>
 
                     <div className="mt-8">
-                        <h3 className="text-slate-900 text-base font-semibold dark:text-slate-50">Socials</h3>
+                        <h3 className="text-slate-900 text-base font-semibold dark:text-slate-50">{t.contact.socialsTitle}</h3>
                         <ul className="m-0 flex list-none items-center gap-3 p-0">
 
                             {/* <!-- LinkedIn --> */}
@@ -180,34 +181,33 @@ export default function ContactForm() {
                     />
                     <div>
                         <label htmlFor="name"
-                            className="mb-2 text-slate-900 dark:text-slate-50 font-medium text-sm inline-block">Name</label>
-                        <input type="text" id="name" name="name" placeholder="Momen" required autoComplete="name"
+                            className="mb-2 text-slate-900 dark:text-slate-50 font-medium text-sm inline-block">{f.name}</label>
+                        <input type="text" id="name" name="name" placeholder={f.namePlaceholder} required autoComplete="name"
                             className="px-3 py-2.5 text-sm text-slate-900 w-full rounded-md bg-white outline-1 -outline-offset-1 outline-slate-300 focus:outline-2 focus:-outline-offset-2 focus:outline-teal-600 dark:text-slate-50 dark:bg-neutral-800 dark:outline-neutral-700" />
                     </div>
                     <div>
                         <label htmlFor="email"
-                            className="mb-2 text-slate-900 dark:text-slate-50 font-medium text-sm inline-block">Email</label>
-                        <input type="email" id="email" name="email" placeholder="momen@gmail.com" required autoComplete="email"
+                            className="mb-2 text-slate-900 dark:text-slate-50 font-medium text-sm inline-block">{f.email}</label>
+                        <input type="email" id="email" name="email" placeholder={f.emailPlaceholder} required autoComplete="email"
                             className="px-3 py-2.5 text-sm text-slate-900 w-full rounded-md bg-white outline-1 -outline-offset-1 outline-slate-300 focus:outline-2 focus:-outline-offset-2 focus:outline-teal-600 dark:text-slate-50 dark:bg-neutral-800 dark:outline-neutral-700" />
                     </div>
                     <div>
-                        <label htmlFor="phone" className="mb-2 text-slate-900 dark:text-slate-50 font-medium text-sm inline-block">Phone
-                            number</label>
-                        <input type="tel" id="phone" name="phone" placeholder="+201234567890" autoComplete="tel"
+                        <label htmlFor="phone" className="mb-2 text-slate-900 dark:text-slate-50 font-medium text-sm inline-block">{f.phone}</label>
+                        <input type="tel" id="phone" name="phone" placeholder={f.phonePlaceholder} autoComplete="tel"
                             className="px-3 py-2.5 text-sm text-slate-900 w-full rounded-md bg-white outline-1 -outline-offset-1 outline-slate-300 focus:outline-2 focus:-outline-offset-2 focus:outline-teal-600 dark:text-slate-50 dark:bg-neutral-800 dark:outline-neutral-700" />
                     </div>
                     <div>
                         <label htmlFor="message"
-                            className="mb-2 text-slate-900 dark:text-slate-50 font-medium text-sm inline-block">Message</label>
-                        <textarea placeholder="Write message" rows="6" type="text" id="message" required name="message"
+                            className="mb-2 text-slate-900 dark:text-slate-50 font-medium text-sm inline-block">{f.message}</label>
+                        <textarea placeholder={f.messagePlaceholder} rows="6" type="text" id="message" required name="message"
                             className="px-3 py-2.5 text-sm text-slate-900 w-full rounded-md bg-white outline-1 -outline-offset-1 outline-slate-300 focus:outline-2 focus:-outline-offset-2 focus:outline-teal-600 dark:text-slate-50 dark:bg-neutral-800 dark:outline-neutral-700"></textarea>
                     </div>
 
                     <button type="submit" disabled={status === "sending"}
-                        className="py-2.5 px-4 text-sm rounded-md font-semibold cursor-pointer text-white border border-teal-600 bg-teal-600 hover:bg-teal-700 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-500 disabled:cursor-not-allowed disabled:opacity-70">{status === "sending" ? "Sending..." : "Send message"}</button>
+                        className="py-2.5 px-4 text-sm rounded-md font-semibold cursor-pointer text-white border border-teal-600 bg-teal-600 hover:bg-teal-700 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-500 disabled:cursor-not-allowed disabled:opacity-70">{status === "sending" ? f.sending : f.send}</button>
                     <p aria-live="polite" role="status" className="min-h-5 text-sm">
-                        {status === "sent" && <span className="text-teal-600">Message sent. Thank you!</span>}
-                        {status === "error" && <span className="text-red-500">Something went wrong. Try again.</span>}
+                        {status === "sent" && <span className="text-teal-600">{f.sent}</span>}
+                        {status === "error" && <span className="text-red-500">{f.error}</span>}
                     </p>
                 </Reveal>
             </div>

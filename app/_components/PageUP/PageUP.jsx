@@ -1,7 +1,9 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import { useI18n } from "../../_i18n/LanguageProvider";
 
 const PageUP = () => {
+  const { t } = useI18n();
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -28,10 +30,10 @@ const PageUP = () => {
   return (
     <button
       type="button"
-      aria-label="Back to top"
+      aria-label={t.pageUp}
       onClick={scrollToTop}
       tabIndex={isVisible ? 0 : -1}
-      className={`fixed right-5 bottom-5 z-40 cursor-pointer rounded-full border-2 border-teal-600 bg-white/80 p-2 text-gray-800 shadow-lg backdrop-blur transition-all duration-500 ease-out hover:-translate-y-1 hover:bg-teal-600 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-500 dark:border-[#0B4078] dark:bg-[#071321]/80 dark:text-white dark:hover:bg-teal-600 ${
+      className={`fixed end-5 bottom-5 z-40 cursor-pointer rounded-full border-2 border-teal-600 bg-white/80 p-2 text-gray-800 shadow-lg backdrop-blur transition-all duration-500 ease-out hover:-translate-y-1 hover:bg-teal-600 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-500 dark:border-[#0B4078] dark:bg-[#071321]/80 dark:text-white dark:hover:bg-teal-600 ${
         isVisible ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-4 opacity-0"
       }`}
     >

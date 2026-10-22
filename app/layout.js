@@ -1,7 +1,8 @@
-import { Geist, Geist_Mono } from "next/font/google";
+import { Cairo, Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "./_components/Navbar/Navbar";
 import Footer from "./_components/Footer/Footer";
+import LanguageProvider from "./_i18n/LanguageProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -11,6 +12,12 @@ const geistSans = Geist({
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+});
+
+// خط عربي بيشتغل تلقائيًا لما لغة الصفحة تبقى "ar"
+const cairo = Cairo({
+  variable: "--font-cairo",
+  subsets: ["arabic", "latin"],
 });
 
 export const metadata = {
@@ -59,12 +66,17 @@ export const viewport = {
   ],
 };
 
-// سكربت صغير يمنع "فلاش" الثيم الخاطئ قبل أول paint
-const themeInitScript = `
+// سكربت صغير يمنع "فلاش" الثيم/اللغة الخاطئين قبل أول paint
+const initScript = `
 try {
   var stored = localStorage.getItem('theme');
   var isDark = stored ? stored === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
   if (isDark) document.documentElement.classList.add('dark');
+
+  var lang = localStorage.getItem('lang');
+  if (lang !== 'ar' && lang !== 'en') lang = 'en';
+  document.documentElement.lang = lang;
+  document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
 } catch (e) {}
 `;
 
@@ -72,16 +84,19 @@ export default function RootLayout({ children }) {
   return (
     <html
       lang="en"
+      dir="ltr"
       suppressHydrationWarning
-      className={`${geistSans.variable} ${geistMono.variable} h-full scroll-smooth scroll-pt-[6.5rem] font-sans antialiased [-webkit-tap-highlight-color:transparent] [&::-webkit-scrollbar]:h-2.5 [&::-webkit-scrollbar]:w-2.5 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-teal-500 [&::-webkit-scrollbar-track]:bg-transparent dark:[&::-webkit-scrollbar-thumb]:bg-[#0B4078]`}
+      className={`${geistSans.variable} ${geistMono.variable} ${cairo.variable} h-full scroll-smooth scroll-pt-[6.5rem] font-sans antialiased [-webkit-tap-highlight-color:transparent] [&::-webkit-scrollbar]:h-2.5 [&::-webkit-scrollbar]:w-2.5 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-teal-500 [&::-webkit-scrollbar-track]:bg-transparent dark:[&::-webkit-scrollbar-thumb]:bg-[#0B4078]`}
     >
       <head>
-        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+        <script dangerouslySetInnerHTML={{ __html: initScript }} />
       </head>
       <body className="flex min-h-full flex-col overflow-x-hidden selection:bg-teal-500/40 dark:bg-black">
-        <Navbar />
-        {children}
-        <Footer />
+        <LanguageProvider>
+          <Navbar />
+          {children}
+          <Footer />
+        </LanguageProvider>
       </body>
     </html>
   );

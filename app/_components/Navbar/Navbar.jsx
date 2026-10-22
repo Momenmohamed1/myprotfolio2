@@ -1,20 +1,27 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import ThemeToggle from "./ThemeToggle";
-
-const NAVS = [
-  { name: "Home", href: "/#Home", id: "Home" },
-  { name: "About", href: "/#AboutMe", id: "AboutMe" },
-  { name: "Skills", href: "/#Skills", id: "Skills" },
-  { name: "Projects", href: "/#Project", id: "Project" },
-  { name: "Contact", href: "/#ConectMe", id: "ConectMe" },
-];
+import LanguageToggle from "./LanguageToggle";
+import { useI18n } from "../../_i18n/LanguageProvider";
 
 const Navbar = () => {
+  const { t } = useI18n();
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState("Home");
   const [scrolled, setScrolled] = useState(false);
+
+  // روابط القائمة (النصوص بتتغيّر مع اللغة، الـ id ثابت)
+  const NAVS = useMemo(
+    () => [
+      { name: t.nav.home, href: "/#Home", id: "Home" },
+      { name: t.nav.about, href: "/#AboutMe", id: "AboutMe" },
+      { name: t.nav.skills, href: "/#Skills", id: "Skills" },
+      { name: t.nav.projects, href: "/#Project", id: "Project" },
+      { name: t.nav.contact, href: "/#ConectMe", id: "ConectMe" },
+    ],
+    [t]
+  );
 
   // ظل/خلفية أقوى لما المستخدم يعمل سكرول
   useEffect(() => {
@@ -26,7 +33,9 @@ const Navbar = () => {
 
   // تحديد السكشن النشط أثناء السكرول (scroll spy)
   useEffect(() => {
-    const sections = NAVS.map((nav) => document.getElementById(nav.id)).filter(Boolean);
+    const sections = ["Home", "AboutMe", "Skills", "Project", "ConectMe"]
+      .map((id) => document.getElementById(id))
+      .filter(Boolean);
     if (!sections.length || typeof IntersectionObserver === "undefined") return;
 
     const observer = new IntersectionObserver(
@@ -69,12 +78,12 @@ const Navbar = () => {
             : "border-white/20 shadow-lg shadow-teal-200/50 dark:shadow-none"
         }`}
       >
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between gap-2">
           <a
             href="/#Home"
-            className="logo text-lg font-bold transition-colors duration-300 hover:text-teal-600 dark:text-white dark:hover:text-teal-400"
+            className="logo shrink-0 text-lg font-bold transition-colors duration-300 hover:text-teal-600 dark:text-white dark:hover:text-teal-400"
           >
-            Momen
+            {t.nav.brand}
           </a>
 
           {/* روابط الديسكتوب */}
@@ -86,7 +95,7 @@ const Navbar = () => {
                   <a
                     href={nav.href}
                     aria-current={isActive ? "page" : undefined}
-                    className={`relative rounded-full px-3 py-2 transition-colors duration-300 hover:text-teal-600 dark:hover:text-teal-400  ${
+                    className={`relative rounded-full px-2.5 py-2 transition-colors duration-300 hover:text-teal-600 xl:px-3 dark:hover:text-teal-400  ${
                       isActive ? "text-teal-600 dark:text-teal-400" : "dark:text-white"
                     }`}
                   >
@@ -103,14 +112,15 @@ const Navbar = () => {
           </ul>
 
           {/* أدوات اليمين */}
-          <div className="flex items-center gap-1">
+          <div className="flex shrink-0 items-center gap-1">
             <ThemeToggle />
+            <LanguageToggle />
             <button
               type="button"
               onClick={() => setOpen((prev) => !prev)}
               aria-expanded={open}
               aria-controls="mobile-menu"
-              aria-label={open ? "Close menu" : "Open menu"}
+              aria-label={open ? t.nav.closeMenu : t.nav.openMenu}
               className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full text-gray-800 transition-colors duration-300 hover:bg-teal-500/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-500 sm:hidden dark:text-white"
             >
               <svg
@@ -171,7 +181,7 @@ const Navbar = () => {
                   key={nav.id}
                   style={{ transitionDelay: open ? `${index * 60}ms` : "0ms" }}
                   className={`transition-all duration-300 ease-out ${
-                    open ? "translate-x-0 opacity-100" : "-translate-x-3 opacity-0"
+                    open ? "translate-x-0 opacity-100" : "-translate-x-3 opacity-0 rtl:translate-x-3"
                   }`}
                 >
                   <a

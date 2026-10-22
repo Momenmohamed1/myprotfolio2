@@ -1,12 +1,7 @@
-import Reveal from "../Reveal/Reveal";
+"use client";
 
-const navLinks = [
-  { label: "Home", href: "/#Home" },
-  { label: "About", href: "/#AboutMe" },
-  { label: "Skills", href: "/#Skills" },
-  { label: "Projects", href: "/#Project" },
-  { label: "Contact", href: "/#ConectMe" },
-];
+import Reveal from "../Reveal/Reveal";
+import { useI18n } from "../../_i18n/LanguageProvider";
 
 const socials = [
   {
@@ -40,6 +35,16 @@ const socials = [
 ];
 
 export default function Footer() {
+  const { t } = useI18n();
+
+  const navLinks = [
+    { label: t.nav.home, href: "/#Home" },
+    { label: t.nav.about, href: "/#AboutMe" },
+    { label: t.nav.skills, href: "/#Skills" },
+    { label: t.nav.projects, href: "/#Project" },
+    { label: t.nav.contact, href: "/#ConectMe" },
+  ];
+
   return (
     <footer className="px-4 pt-16 pb-6 dark:bg-black">
       <Reveal
@@ -49,15 +54,15 @@ export default function Footer() {
         <div className="grid gap-8 md:grid-cols-3">
           <div>
             <h3 className="bg-linear-to-r from-indigo-500 via-blue-500 to-teal-400 bg-clip-text text-2xl font-bold text-transparent">
-              Momen Mohamed
+              {t.hero.name}
             </h3>
             <p className="mt-3 max-w-xs text-sm text-gray-600 dark:text-gray-400">
-              Frontend Developer building modern, responsive, and user-friendly web experiences.
+              {t.footer.tagline}
             </p>
           </div>
 
           <div>
-            <h4 className="mb-3 text-sm font-semibold text-gray-900 dark:text-white">Quick links</h4>
+            <h4 className="mb-3 text-sm font-semibold text-gray-900 dark:text-white">{t.footer.quickLinks}</h4>
             <ul className="space-y-2 text-sm">
               {navLinks.map((link) => (
                 <li key={link.href}>
@@ -73,7 +78,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="mb-3 text-sm font-semibold text-gray-900 dark:text-white">Let's connect</h4>
+            <h4 className="mb-3 text-sm font-semibold text-gray-900 dark:text-white">{t.footer.connect}</h4>
             <div className="flex gap-3">
               {socials.map((social) => (
                 <a
@@ -94,7 +99,7 @@ export default function Footer() {
         <div className="mt-8 h-px bg-gradient-to-r from-transparent via-blue-500/40 to-transparent" />
 
         <p className="mt-6 text-center text-sm text-gray-500 dark:text-gray-400">
-          &copy; {new Date().getFullYear()} Momen Mohamed. Built with Next.js and Tailwind CSS.
+          {t.footer.rights(new Date().getFullYear())}
         </p>
       </Reveal>
     </footer>
