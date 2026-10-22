@@ -67,7 +67,7 @@ const AboutMe = () => {
         <Reveal
           direction="right"
           delay={200}
-          className="m-2 min-w-90 shrink-0 rounded-2xl border-2 border-teal-500 dark:border-[#123B60] dark:bg-[#071321]"
+          className="m-2 rounded-2xl border-2 border-teal-500 dark:border-[#123B60] dark:bg-[#071321] lg:min-w-90 lg:shrink-0"
         >
           <AboutSide />
         </Reveal>

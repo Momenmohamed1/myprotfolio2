@@ -18,6 +18,8 @@ export const dictionaries = {
       openMenu: "Open menu",
       closeMenu: "Close menu",
       langLabel: "Change language",
+      switchToArabic: "Switch to Arabic",
+      switchToEnglish: "Switch to English",
     },
     theme: {
       toLight: "Switch to light mode",
@@ -128,6 +130,8 @@ export const dictionaries = {
       openMenu: "افتح القائمة",
       closeMenu: "اقفل القائمة",
       langLabel: "تغيير اللغة",
+      switchToArabic: "التبديل للعربية",
+      switchToEnglish: "التبديل للإنجليزية",
     },
     theme: {
       toLight: "التبديل للوضع الفاتح",
